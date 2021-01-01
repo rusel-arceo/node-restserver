@@ -20,7 +20,7 @@ if(process.env.NODE_ENV === 'dev') //Para usarlo en la conexión ya sea local o 
     process.env.URLDB = 'mongodb://localhost:27017/cafe';
 }else{
     console.log('Estor en producc');
-    process.env.URLDB = 'mongodb+srv://somnus:BHxJHn2g2Iyy6FdU@cluster0.cbsyw.mongodb.net/cafe';
+    process.env.URLDB = process.env.MONGO_URI;
 }
 
 
