@@ -9,7 +9,10 @@ const bodyParser = require('body-parser'); //requerimos paquete para recibir los
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));  
 
-app.use (require ('./routes/usuario'));
+//configuración global de rutas
+app.use (require ('./routes/index'));  //Este index tiene todos los requerimientos de routes necesarios
+
+
 // parse application/json
 app.use(bodyParser.json());
 
@@ -31,5 +34,5 @@ mongoose.connect(process.env.URLDB, {    //El process.env.URLDB se configuro en 
 }); //El callbacj sirve para procesar  un erro si lo hay o una respuesta si la hay.
 
 app.listen(process.env.PORT, ()=> {
-        console.log(`Escuchado el pueto: ${process.env.PORT}`)
+        console.log(`Escuchado el puerto: ${process.env.PORT}`)
     });  //El callback es opcional

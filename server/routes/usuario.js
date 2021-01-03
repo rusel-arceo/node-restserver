@@ -4,9 +4,21 @@ const bcrypt = require('bcrypt');
 const usuario = require('../models/usuario');
 const _ = require ('underscore');
 
+const {verificaToken, verificaAdmin_Role} = require('../middlewares/autenticacion'); //La requerimos y desagregadmos, puede ser recibirla u utilizarla con algo.verificaToken
+
 app = express();
 
-app.get('/usuario', function (req, res) {
+app.get('/usuario',verificaToken, function (req, res) {  //Definimos que donde  se llamará, no la estamos ejecutando
+
+  /*Prueba*/
+
+ /*  return res.json(
+    {
+      usuario: req.usuario,
+      nombre: req.usuario.nombre,
+      email: req.usuario.email
+    }
+  ); */
 
   let desde = req.query.desde || 0; //Tomamos el valor de desde que se manda como parametro adicional en la url con ?desde= si existe o cero
   desde = Number(desde);
@@ -39,8 +51,8 @@ app.get('/usuario', function (req, res) {
       })  //Es como la instrucción ejecutalo
   }); //Fin del get
 
-app.post('/usuario', function (req, res) {
-   let body = req.body; //aparece cuando el body parse procese las peticiones, funciona para los 4 tipos de petición
+app.post('/usuario',[verificaToken, verificaAdmin_Role], function (req, res) {
+   let body = req.body; //aparece cuando el bodyparse procese las peticiones, funciona para los 4 tipos de petición
    
    /* Creación del esquema*/
    let usuario = new Usuario({
@@ -71,8 +83,9 @@ app.post('/usuario', function (req, res) {
 }); //fin de la función post
 
 
-  app.put('/usuario/:id', function (req, res) { // Se llama localhost:3000/usuario/id (el valor solamente)
+  app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) { // Se llama localhost:3000/usuario/id (el valor solamente)
     let id = req.params.id;
+    //let id = req.usuario.id;
     
     let body = _.pick(req.body,['nombre','email','img','role','estado']);
     /*Regresa una copia del objeto con los parametros deseados pasados a traves de una  lista blanca*/
@@ -110,7 +123,7 @@ app.post('/usuario', function (req, res) {
   
 });// fin del put
 
-app.delete('/usuario/:id', function (req, res) {  // /usuario:id significa que es obligatorio pasar la ruta del id y se recoge con req.params.id; sin embargo si no se pone se puede obtener parametros opcionales con ?parametro: valor y se recoge con req.query.nombreDelParametroOpcional
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) {  // /usuario:id significa que es obligatorio pasar la ruta del id y se recoge con req.params.id; sin embargo si no se pone se puede obtener parametros opcionales con ?parametro: valor y se recoge con req.query.nombreDelParametroOpcional
    let id = req.params.id;
 
 /*  Esta permite borrar físicamente el registro
