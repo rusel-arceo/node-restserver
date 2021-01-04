@@ -4,11 +4,12 @@ const app = express();
 
 const mongoose = require('mongoose'); //paquete para conectar con mongodb
 const bodyParser = require('body-parser'); //requerimos paquete para recibir los paramentros
-
+//const path
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));  
-
+//Para crear las rutas validas
+const path = require ('path');
 //configuración global de rutas
 app.use (require ('./routes/index'));  //Este index tiene todos los requerimientos de routes necesarios
 
@@ -16,7 +17,11 @@ app.use (require ('./routes/index'));  //Este index tiene todos los requerimient
 // parse application/json
 app.use(bodyParser.json());
 
- 
+//HAbilitando la carpera publica para que sea visible y accible en el browser
+app.use(express.static(path.resolve( __dirname,'../public')));
+    //ojo, al intentar hacer el path de esta manera se concatena de forma incorrecta, para esto usaremos una libreria ya incuida en node  require ('path');
+    // el path.resolve arma el path mandandole los  parametros
+
 // app.get('/', function (req, res) //Es la ruta raíz, localhost:3000/
 
 
