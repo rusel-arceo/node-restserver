@@ -39,5 +39,12 @@ if(process.env.NODE_ENV === 'dev') //Para usarlo en la conexión ya sea local o 
     process.env.URLDB = process.env.MONGO_URI;
 }
 
+//=====================================================================
+//google cliet id
+//=====================================================================
+
+process.env.CLIENT_ID = process.env.CLIENT_ID || '753068019578-i7vas8f1q6befn5oj5a3otbcvfphk58l.apps.googleusercontent.com';  //Declaramos el client por si la ponemos como variable de entorno en Heroku o de alguna otra manera.
+
+
 
 
