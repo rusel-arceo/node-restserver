@@ -1,7 +1,7 @@
 const express = require('express');
 const Usuario = require ('../models/usuario');
 const bcrypt = require('bcrypt');
-const usuario = require('../models/usuario');
+//const usuario = require('../models/usuario');
 const _ = require ('underscore');
 
 const {verificaToken, verificaAdmin_Role} = require('../middlewares/autenticacion'); //La requerimos y desagregadmos, puede ser recibirla u utilizarla con algo.verificaToken
@@ -85,8 +85,7 @@ app.post('/usuario',[verificaToken, verificaAdmin_Role], function (req, res) {
 
   app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, res) { // Se llama localhost:3000/usuario/id (el valor solamente)
     let id = req.params.id;
-    //let id = req.usuario.id;
-    
+      
     let body = _.pick(req.body,['nombre','email','img','role','estado']);
     /*Regresa una copia del objeto con los parametros deseados pasados a traves de una  lista blanca*/
     
@@ -98,7 +97,7 @@ app.post('/usuario',[verificaToken, verificaAdmin_Role], function (req, res) {
     
 
     //usuario.findById(id, (err,usuarioDB)=>{ //.findById viene dek mongoose y es para buscar el usuario aunque despues deberiamos hacer algo como usuarioDB.save
-    usuario.findByIdAndUpdate( id, body, { new: true, runValidators: true }, (err,usuarioDB)=>{  //Estew busca por el ID y actualiza si lo encuentra. ver documentación
+    Usuario.findByIdAndUpdate( id, body, { new: true, runValidators: true }, (err,usuarioDB)=>{  //Estew busca por el ID y actualiza si lo encuentra. ver documentación
      //{new} Son opciones de la function y especifica que quiero que devuelva el archivo modificado, de otra forma devuelve el original
       if(err){
         return res.status(400).json(
@@ -158,7 +157,7 @@ app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function (req, r
    /* Encontramos el registro y le cambiamos el estado*/  
     let cambioEstado = {'estado':'false'};
 
-    usuario.findByIdAndUpdate( id, cambioEstado, {new: true, runValidators: true} , (err,usuarioBorrado)=>{
+    Usuario.findByIdAndUpdate( id, cambioEstado, {new: true, runValidators: true} , (err,usuarioBorrado)=>{
       if(err)
       {
         return res.status(400).json(

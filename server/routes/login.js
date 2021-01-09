@@ -55,7 +55,7 @@ app.post('/login',(req,res)=>{
          let token = jwt.sign(
              { usuario: usuarioDB },
                 process.env.SEED,
-                {expiresIn: 60*60*24*30}  //seg*min*hrs*days
+                {expiresIn: process.env.CADUCIDAD_TOKEN}  //seg*min*hrs*days
                 //    {expiresIn: process.env.CADUCIDAD_TOKEN}  //seg*min*hrs*days
             );
 
@@ -146,7 +146,7 @@ async function verify(token) {  //La función la utillizaremos dentro del post, 
                 let token = jwt.sign(
                     { usuario: usuarioBD },
                        process.env.SEED,
-                       {expiresIn: 60*60*24*30}  //seg*min*hrs*days
+                       {expiresIn: process.env.CADUCIDAD_TOKEN}  //seg*min*hrs*days
                        //    {expiresIn: process.env.CADUCIDAD_TOKEN}  //seg*min*hrs*days
                    );
        

@@ -36,8 +36,8 @@ mongoose.connect(process.env.URLDB, {    //El process.env.URLDB se configuro en 
   //Si no existe el error continua con la ejecución
   console.log('Base de Datos online');
 
-}); //El callbacj sirve para procesar  un erro si lo hay o una respuesta si la hay.
+}); //El callback0 sirve para procesar  un erro si lo hay o una respuesta si la hay.
 
 app.listen(process.env.PORT, ()=> {
-        console.log(`Escuchado el puerto: ${process.env.PORT}`)
+        console.log(`Escuchando el puerto: ${process.env.PORT}`)
     });  //El callback es opcional

@@ -18,7 +18,7 @@ let verificaToken = ( req, res, next) =>{
                 });
         }
         req.usuario = decoded.usuario; //El decoded son los valores del token, ya desifrados. decoded.usuario es el payload
-        console.log(decoded.usuario);
+        //console.log(decoded.usuario);
         next();  //dentro del verify para que verifique que la semilla sea correcta
     }) //fin del verify 
 
